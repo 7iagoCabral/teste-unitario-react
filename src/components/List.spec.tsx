@@ -9,17 +9,18 @@ test('Getting user inner dom', () => {
 }) 
 describe('List Component', () => {
   it('should render  list items', () => {
-    const { getByText, rerender, queryByText, debug } = render(<List initialItems={['Tiago', 'Igor', 'Gabriel']} />)
+    const { getByText, rerender, queryByText, debug, unmount } = render(<List initialItems={['Tiago', 'Igor', 'Gabriel']} />)
 
     expect(getByText('Tiago')).toBeInTheDocument()
     expect(getByText('Igor')).toBeInTheDocument()
     expect(getByText('Gabriel')).toBeInTheDocument()
     debug()
-    rerender(<List initialItems={['John']} />)
+    unmount()
+    render(<List initialItems={['John']} />)
     debug()
     // Código abaixo não encontra a rerenderização
-    //expect(screen.getByText('John')).toBeInTheDocument()
-    //expect(screen.queryByText('Tiago')).not.toBeInTheDocument()
+    expect(getByText('John')).toBeInTheDocument()
+    expect(queryByText('Tiago')).not.toBeInTheDocument()
   })
 
   it('should be able to add new item to the list', async () => {
